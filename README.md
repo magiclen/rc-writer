@@ -2,6 +2,7 @@ Rc Writer
 ====================
 
 [![Build Status](https://travis-ci.org/magiclen/rc-writer.svg?branch=master)](https://travis-ci.org/magiclen/rc-writer)
+[![Build status](https://ci.appveyor.com/api/projects/status/4pahg84urfpyls8a/branch/master?svg=true)](https://ci.appveyor.com/project/magiclen/rc-writer/branch/master)
 
 A tiny implement for writing data to a reference counted instance.
 
