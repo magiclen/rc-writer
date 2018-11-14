@@ -1,0 +1,22 @@
+extern crate rc_writer;
+
+use std::cell::RefCell;
+use std::rc::Rc;
+use std::io::Write;
+
+use rc_writer::RcWriter;
+
+#[test]
+fn to_vec() {
+    let data = RefCell::new(Vec::new());
+
+    let data_rc = Rc::new(data);
+
+    let mut writer = RcWriter::new(data_rc.clone());
+
+    writer.write(b"Hello world!").unwrap();
+
+    writer.flush().unwrap();
+
+    assert_eq!(b"Hello world!".to_vec(), *data_rc.borrow());
+}

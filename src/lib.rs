@@ -1,149 +1,67 @@
-//! A tiny implement for writing data to a reference counted instance.
-//!
-//! ## Examples
-//!
-//! ### RcWriter
-//!
-//! ```
-//! extern crate rc_writer;
-//!
-//! use rc_writer::RcWriter;
-//!
-//! use std::rc::Rc;
-//!
-//! use std::cell::RefCell;
-//!
-//! use std::io::Write;
-//!
-//! let data = RefCell::new(Vec::new());
-//!
-//! let data_rc = Rc::new(data);
-//!
-//! let mut writer = RcWriter::new(data_rc.clone());
-//!
-//! writer.write(b"Hello world!").unwrap();
-//!
-//! writer.flush().unwrap();
-//!
-//! assert_eq!(b"Hello world!".to_vec(), *data_rc.borrow());
-//! ```
-//!
-//! ### RcOptionWriter
-//!
-//! ```
-//! extern crate rc_writer;
-//!
-//! use rc_writer::RcOptionWriter;
-//!
-//! use std::rc::Rc;
-//!
-//! use std::cell::RefCell;
-//!
-//! use std::io::Write;
-//!
-//! let data = RefCell::new(Some(Vec::new()));
-//!
-//! let data_rc = Rc::new(data);
-//!
-//! let mut writer = RcOptionWriter::new(data_rc.clone());
-//!
-//! writer.write(b"Hello world!").unwrap();
-//!
-//! writer.flush().unwrap();
-//!
-//! let data = data_rc.borrow_mut().take().unwrap(); // remove out the vec from rc
-//!
-//! assert_eq!(b"Hello world!".to_vec(), data);
-//! ```
+/*!
+# Rc Writer
+
+A tiny implement for writing data to a reference counted instance.
+
+## Examples
+
+### RcWriter
+
+```rust
+extern crate rc_writer;
+
+use rc_writer::RcWriter;
 
 use std::rc::Rc;
+
 use std::cell::RefCell;
 
-use std::io::{self, Write, ErrorKind};
+use std::io::Write;
 
-pub struct RcWriter<W: Write> {
-    inner: Rc<RefCell<W>>
-}
+let data = RefCell::new(Vec::new());
 
-impl<W: Write> RcWriter<W> {
-    pub fn new(writer: Rc<RefCell<W>>) -> RcWriter<W> {
-        RcWriter {
-            inner: writer
-        }
-    }
-}
+let data_rc = Rc::new(data);
 
-impl<W: Write> Write for RcWriter<W> {
-    fn write(&mut self, buf: &[u8]) -> Result<usize, io::Error> {
-        self.inner.borrow_mut().write(buf)
-    }
+let mut writer = RcWriter::new(data_rc.clone());
 
-    fn flush(&mut self) -> Result<(), io::Error> {
-        self.inner.borrow_mut().flush()
-    }
-}
+writer.write(b"Hello world!").unwrap();
 
-pub struct RcOptionWriter<W: Write> {
-    inner: Rc<RefCell<Option<W>>>
-}
+writer.flush().unwrap();
 
-impl<W: Write> RcOptionWriter<W> {
-    pub fn new(writer: Rc<RefCell<Option<W>>>) -> RcOptionWriter<W> {
-        RcOptionWriter {
-            inner: writer
-        }
-    }
-}
+assert_eq!(b"Hello world!".to_vec(), *data_rc.borrow());
+```
 
-impl<W: Write> Write for RcOptionWriter<W> {
-    fn write(&mut self, buf: &[u8]) -> Result<usize, io::Error> {
-        match self.inner.borrow_mut().as_mut() {
-            Some(writer) => writer.write(buf),
-            None => Err(io::Error::new(ErrorKind::BrokenPipe, "the writer has been removed out"))
-        }
-    }
+### RcOptionWriter
 
-    fn flush(&mut self) -> Result<(), io::Error> {
-        match self.inner.borrow_mut().as_mut() {
-            Some(writer) => writer.flush(),
-            None => Err(io::Error::new(ErrorKind::BrokenPipe, "the writer has been removed out"))
-        }
-    }
-}
+```rust
+extern crate rc_writer;
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+use rc_writer::RcOptionWriter;
 
-    #[test]
-    fn write_to_vec() {
-        let data = RefCell::new(Vec::new());
+use std::rc::Rc;
 
-        let data_rc = Rc::new(data);
+use std::cell::RefCell;
 
-        let mut writer = RcWriter::new(data_rc.clone());
+use std::io::Write;
 
-        writer.write(b"Hello world!").unwrap();
+let data = RefCell::new(Some(Vec::new()));
 
-        writer.flush().unwrap();
+let data_rc = Rc::new(data);
 
-        assert_eq!(b"Hello world!".to_vec(), *data_rc.borrow());
-    }
+let mut writer = RcOptionWriter::new(data_rc.clone());
 
-    #[test]
-    fn write_to_option_vec() {
-        let data = RefCell::new(Some(Vec::new()));
+writer.write(b"Hello world!").unwrap();
 
-        let data_rc = Rc::new(data);
+writer.flush().unwrap();
 
-        let mut writer = RcOptionWriter::new(data_rc.clone());
+let data = data_rc.borrow_mut().take().unwrap(); // remove out the vec from rc
 
-        writer.write(b"Hello world!").unwrap();
+assert_eq!(b"Hello world!".to_vec(), data);
+```
+*/
 
-        writer.flush().unwrap();
+mod rc_writer;
+mod rc_option_writer;
 
-        let data = data_rc.borrow_mut().take().unwrap(); // remove out the vec from rc
-
-        assert_eq!(b"Hello world!".to_vec(), data);
-    }
-}
+pub use rc_writer::RcWriter;
+pub use rc_option_writer::RcOptionWriter;
