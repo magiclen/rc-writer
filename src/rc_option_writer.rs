@@ -7,6 +7,7 @@ pub struct RcOptionWriter<W: Write> {
 }
 
 impl<W: Write> RcOptionWriter<W> {
+    #[inline]
     pub fn new(writer: Rc<RefCell<Option<W>>>) -> RcOptionWriter<W> {
         RcOptionWriter {
             inner: writer
@@ -15,6 +16,7 @@ impl<W: Write> RcOptionWriter<W> {
 }
 
 impl<W: Write> Write for RcOptionWriter<W> {
+    #[inline]
     fn write(&mut self, buf: &[u8]) -> Result<usize, io::Error> {
         match self.inner.borrow_mut().as_mut() {
             Some(writer) => writer.write(buf),
@@ -22,6 +24,7 @@ impl<W: Write> Write for RcOptionWriter<W> {
         }
     }
 
+    #[inline]
     fn flush(&mut self) -> Result<(), io::Error> {
         match self.inner.borrow_mut().as_mut() {
             Some(writer) => writer.flush(),
