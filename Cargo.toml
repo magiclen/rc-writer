@@ -1,6 +1,6 @@
 [package]
 name = "rc-writer"
-version = "1.1.4"
+version = "1.1.5"
 authors = ["Magic Len <len@magiclen.org>"]
 repository = "https://github.com/magiclen/rc-writer"
 homepage = "https://magiclen.org/rc-writer"
@@ -10,8 +10,8 @@ description= "A tiny implement for writing data to a reference counted instance.
 readme = "README.md"
 license = "MIT"
 
-[badges]
-travis-ci = { repository = "magiclen/rc-writer", branch = "master" }
-appveyor = { repository = "magiclen/rc-writer", branch = "master", service = "github" }
+[badges.travis-ci]
+repository = "magiclen/rc-writer"
+branch = "master"
 
 [dependencies]
