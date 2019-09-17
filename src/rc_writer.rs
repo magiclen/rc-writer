@@ -1,16 +1,16 @@
-use std::rc::Rc;
 use std::cell::RefCell;
 use std::io::{self, Write};
+use std::rc::Rc;
 
 pub struct RcWriter<W: Write> {
-    inner: Rc<RefCell<W>>
+    inner: Rc<RefCell<W>>,
 }
 
 impl<W: Write> RcWriter<W> {
     #[inline]
     pub fn new(writer: Rc<RefCell<W>>) -> RcWriter<W> {
         RcWriter {
-            inner: writer
+            inner: writer,
         }
     }
 }

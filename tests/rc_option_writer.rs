@@ -1,8 +1,8 @@
 extern crate rc_writer;
 
 use std::cell::RefCell;
-use std::rc::Rc;
 use std::io::Write;
+use std::rc::Rc;
 
 use rc_writer::RcOptionWriter;
 
@@ -14,7 +14,7 @@ fn write_to_option_vec() {
 
     let mut writer = RcOptionWriter::new(data_rc.clone());
 
-    writer.write(b"Hello world!").unwrap();
+    writer.write_all(b"Hello world!").unwrap();
 
     writer.flush().unwrap();
 
