@@ -1,7 +1,7 @@
 Rc Writer
 ====================
 
-[![Build Status](https://travis-ci.org/magiclen/rc-writer.svg?branch=master)](https://travis-ci.org/magiclen/rc-writer)
+[![CI](https://github.com/magiclen/rc-writer/actions/workflows/ci.yml/badge.svg)](https://github.com/magiclen/rc-writer/actions/workflows/ci.yml)
 
 A tiny implement for writing data to a reference counted instance.
 
