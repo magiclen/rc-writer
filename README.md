@@ -10,8 +10,6 @@ A tiny implement for writing data to a reference counted instance.
 ### RcWriter
 
 ```rust
-extern crate rc_writer;
-
 use rc_writer::RcWriter;
 
 use std::rc::Rc;
@@ -36,8 +34,6 @@ assert_eq!(b"Hello world!".to_vec(), *data_rc.borrow());
 ### RcOptionWriter
 
 ```rust
-extern crate rc_writer;
-
 use rc_writer::RcOptionWriter;
 
 use std::rc::Rc;
