@@ -59,5 +59,6 @@ assert_eq!(b"Hello world!".to_vec(), data);
 mod rc_option_writer;
 mod rc_writer;
 
-pub use self::rc_writer::RcWriter;
 pub use rc_option_writer::RcOptionWriter;
+
+pub use self::rc_writer::RcWriter;

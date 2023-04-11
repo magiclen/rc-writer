@@ -1,6 +1,8 @@
-use std::cell::RefCell;
-use std::io::{self, ErrorKind, Write};
-use std::rc::Rc;
+use std::{
+    cell::RefCell,
+    io::{self, ErrorKind, Write},
+    rc::Rc,
+};
 
 pub struct RcOptionWriter<W: Write> {
     inner: Rc<RefCell<Option<W>>>,
@@ -10,7 +12,7 @@ impl<W: Write> RcOptionWriter<W> {
     #[inline]
     pub fn new(writer: Rc<RefCell<Option<W>>>) -> RcOptionWriter<W> {
         RcOptionWriter {
-            inner: writer,
+            inner: writer
         }
     }
 }
