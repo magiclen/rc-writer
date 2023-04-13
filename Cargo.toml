@@ -9,7 +9,6 @@ homepage = "https://magiclen.org/rc-writer"
 keywords = ["rc", "refmut", "refcell", "write", "option"]
 categories = ["data-structures"]
 description = "A tiny implement for writing data to a reference counted instance."
-readme = "README.md"
 license = "MIT"
 include = ["src/**/*", "Cargo.toml", "README.md", "LICENSE"]
 
