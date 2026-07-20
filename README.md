@@ -24,7 +24,7 @@ let data_rc = Rc::new(data);
 
 let mut writer = RcWriter::new(data_rc.clone());
 
-writer.write(b"Hello world!").unwrap();
+writer.write_all(b"Hello world!").unwrap();
 
 writer.flush().unwrap();
 
@@ -48,7 +48,7 @@ let data_rc = Rc::new(data);
 
 let mut writer = RcOptionWriter::new(data_rc.clone());
 
-writer.write(b"Hello world!").unwrap();
+writer.write_all(b"Hello world!").unwrap();
 
 writer.flush().unwrap();
 

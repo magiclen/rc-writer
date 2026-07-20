@@ -22,7 +22,7 @@ let data_rc = Rc::new(data);
 
 let mut writer = RcWriter::new(data_rc.clone());
 
-writer.write(b"Hello world!").unwrap();
+writer.write_all(b"Hello world!").unwrap();
 
 writer.flush().unwrap();
 
@@ -46,7 +46,7 @@ let data_rc = Rc::new(data);
 
 let mut writer = RcOptionWriter::new(data_rc.clone());
 
-writer.write(b"Hello world!").unwrap();
+writer.write_all(b"Hello world!").unwrap();
 
 writer.flush().unwrap();
 
@@ -59,6 +59,5 @@ assert_eq!(b"Hello world!".to_vec(), data);
 mod rc_option_writer;
 mod rc_writer;
 
-pub use rc_option_writer::RcOptionWriter;
-
-pub use self::rc_writer::RcWriter;
+// `self::` is required here because the `rc_writer` module has the same name as this crate, which rustdoc passes to doctests with `--extern`.
+pub use self::{rc_option_writer::RcOptionWriter, rc_writer::RcWriter};
